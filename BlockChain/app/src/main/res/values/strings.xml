@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">ChainScore</string>
+    <string name="button">Button</string>
+    <string name="hint">hint</string>
+    <string name="inscriptionTitre"><b><font size="20">Bienvenue !</font></b></string>
+    <string name="inscriptionDescription"><b><center><font size="10">
+        Choisissez votre pseudonyme.</font></center></b></string>
+
+    <string name="soumissionArbitre">Arbitre</string>
+    <string name="soumissionJeu">Jeu</string>
+    <string name="soumissionJoueurs">Joueurs</string>
+    <string name="soumissionRes">Résultat</string>
+    <string name="soumissionFichier">Fichier</string>
+    <string name="soumissionErreur">Match incorrect</string>
+    <string name="serverIsOffline">Le serveur n\'est pas joignable</string>
+
+    <string name="soumisTitre">Le match a été correctement soumis</string>
+    <string name="soumisDescription">Une demande de validation a été envoyée aux deux joueurs</string>
+    <string name="soumisTitreJoueur">Votre confirmation a bien été enregistré</string>
+    <string name="soumisDescriptionJoueur">Match correctement envoyé</string>
+    <string name="learderboardTitle">Classement</string>
+    <string name="title_activity_screen_leaderboard">ScreenLeaderboard</string>
+    <string name="transactionValidationSucces">Listes de transactions correctemnt signées</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="ValidateAsPlayerTitle">Liste des matchs à valider</string>
+
+</resources>

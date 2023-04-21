@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:text="@string/soumissionArbitre"
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="120dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/soumissionJoueurs"
+        app:layout_constraintBottom_toTopOf="@+id/joueur_un"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.015"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/main_button_color"
+        android:onClick="submitABattle"
+        android:text="Soumettre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="136dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/soumissionRes"
+        app:layout_constraintBottom_toTopOf="@+id/victoireJ1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/joueur_un"
+        android:layout_width="188dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:hint="Joueur1"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/joueur_deux"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/joueur_deux"
+        android:layout_width="186dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:hint="Joueur2"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.124"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/victoireJ1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="31dp"
+        android:text="Victoire J1"
+        app:layout_constraintBottom_toBottomOf="@+id/victoireJ2"
+        app:layout_constraintEnd_toStartOf="@+id/victoireJ2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/victoireJ2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Victoire J2"
+        app:layout_constraintBottom_toTopOf="@+id/errorMessage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/matchNul"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginEnd="32dp"
+        android:text="Match Nul"
+        app:layout_constraintBottom_toBottomOf="@+id/victoireJ2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/victoireJ2" />
+
+    <TextView
+        android:id="@+id/pseudo"
+        android:layout_width="133dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="40dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/textView5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/errorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:gravity="center"
+        android:text="@string/soumissionErreur"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

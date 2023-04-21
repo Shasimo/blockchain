@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <Button
+        android:id="@+id/inscrire"
+        android:layout_width="362dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/main_button_color"
+        android:onClick="goToInscriptionScreen"
+        android:text="Connection/Inscription"
+        app:icon="@android:drawable/ic_lock_idle_lock"
+        app:layout_constraintBottom_toTopOf="@+id/dbmanager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/dbmanager"
+        android:layout_width="363dp"
+        android:layout_height="49dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/button_color_background"
+        android:onClick="goToDBTest"
+        android:text="DBManager"
+        android:visibility="invisible"
+        app:icon="@android:drawable/ic_dialog_dialer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/serverMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/inscrire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toggleDevMen" />
+
+    <Button
+        android:id="@+id/packetSender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:onClick="sendPacket"
+        android:text="test"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/inscrire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/toggleDevMen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="toggleDevMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <Button
+        android:id="@+id/refreshEloOnPress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:onClick="refreshElo"
+        android:text="refreshElo"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/packetSender"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <VideoView
+        android:id="@+id/videoMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
