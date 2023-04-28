@@ -17,27 +17,23 @@ import java.util.ArrayList;
 public class SecondScreen extends AppCompatActivity {
     private DBManager db = new DBManager(this, this);
     private User user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.second_screen_layout);
         db = new DBManager(this, this);
-        ((TextView)findViewById(R.id.welcomeTextView)).setText(String.format("Bienvenue %s", Global.getInstance().nicknameG));
-        Log.d("secondScreen", Global.getInstance().publicKeyRepr);
-        Log.d("secondScreen", Global.getInstance().publicKey.first);
-        Log.d("secondScreen", Global.getInstance().publicKey.second);
-        Log.d("secondScreen", Global.getInstance().publicKey.second);
-
-        Log.d("secondScreen", Global.getInstance().nicknameG);
-        ((TextView)findViewById(R.id.eloTextView)).setText(String.format("Votre score ELO est de %s points", Float.toString(db.getPlayerElo(Global.getInstance().publicKey))));
+        if(getIntent().getStringExtra("extra") != null) {
+            Global.getInstance().nickname = getIntent().getStringExtra("extra");
+            Global.getInstance().publicKey = db.getPlayerPublicKey(Global.getInstance().nickname);
+            Global.getInstance().privateKey = db.getPrivateKey();
+            Global.getInstance().publicKeyStr = String.format("%s;%s", Global.getInstance().publicKey.first, Global.getInstance().publicKey.second);
+            Global.getInstance().privateKeyStr = String.format("%s;%s", Global.getInstance().privateKey.first, Global.getInstance().privateKey.second);
+        }
+        ((TextView)findViewById(R.id.welcomeTextView)).setText(String.format("Bienvenue %s", Global.getInstance().nickname));
     }
 
-    //returnButton method
-    public void returnToMainScreen(View v){
-        Global.getInstance().nicknameG = "";
-        Intent intent = new Intent(SecondScreen.this, MainActivity.class);
-        startActivity(intent);
-    }
+
 
     public void goToMatchSubmission(View v){
         Intent intent = new Intent(SecondScreen.this, ScreenMatchSubmission.class);

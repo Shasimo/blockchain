@@ -1,3 +1,4 @@
+
 package com.example.blockchain;
 
 import android.util.Pair;
@@ -6,8 +7,10 @@ public class Global {
     //https://stackoverflow.com/questions/1944656/android-global-variable/
     private static Global mInstance= null;
 
-    public String nicknameG;
-    public String publicKeyRepr;
+    public String nickname;
+
+    public String privateKeyStr;
+    public String publicKeyStr;
 
     public Pair<String, String> publicKey;
     public Pair<String, String> privateKey;
@@ -21,4 +24,3 @@ public class Global {
         return mInstance;
     }
 }
-

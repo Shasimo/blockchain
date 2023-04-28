@@ -1,4 +1,5 @@
 package com.example.blockchain;
+import com.example.elo.CA;
 import com.example.elo.Elo;
 import static com.example.database.QueryHelper.keyConcatenationQuery;
 
@@ -16,10 +17,11 @@ public class User implements Serializable {
     private String publicKeyRepr;   // used for serialization
 
     private transient Pair<String, String> privateKey;
-    private double scoreArbitrage = 0;
+    private transient CA coefArbritrage;
 
     public User(String pseudo, Pair<String, String> publicKey, Pair<String, String> privateKey) {
         elo = new Elo();
+        coefArbritrage = new CA();
         this.pseudo = pseudo;
         this.publicKey = publicKey;
         this.privateKey = privateKey;
@@ -29,15 +31,13 @@ public class User implements Serializable {
 
     public User(String pseudo, Pair<String, String> publicKey){
         elo = new Elo();
+        coefArbritrage = new CA();
         this.pseudo = pseudo;
         this.publicKey = publicKey;
 
         this.publicKeyRepr = String.format("%s;%s", publicKey.first, publicKey.second);
     }
 
-    public void setPseudo(String pseudo){
-        this.pseudo = pseudo;
-    }
 
     public void setPublicKey(Pair<String, String> publicKey){
         this.publicKey = publicKey;
@@ -50,6 +50,10 @@ public class User implements Serializable {
 
     public float getEloValue(){
         return this.elo.getElo();
+    }
+
+    public double getCAValue() {
+        return this.coefArbritrage.getCA();
     }
 
     public String getPseudo(){

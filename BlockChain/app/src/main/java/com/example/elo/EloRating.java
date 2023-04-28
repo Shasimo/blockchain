@@ -21,9 +21,12 @@ public class EloRating{
     }
 
     //K is a constant that can be changed but normally it has a value of 30
-    public static void Rating(Transaction transaction, float k, DBManager db) {
+    public static void Rating(Transaction transaction, float k, double m, DBManager db) {
         float player1Elo = db.getPlayerElo(transaction.getPlayer1().getPublicKey());
         float player2Elo = db.getPlayerElo(transaction.getPlayer2().getPublicKey());
+
+        double player1CA = m * CARating.getInstance().getFourFirstDigit(db.getCAPlayer(transaction.getPlayer1().getPseudo()));
+        double player2CA = m * CARating.getInstance().getFourFirstDigit(db.getCAPlayer(transaction.getPlayer2().getPseudo()));
 
         User player1 = transaction.getPlayer1();
         User player2 = transaction.getPlayer2();
@@ -45,7 +48,7 @@ public class EloRating{
         // However if lower rated player wins, then transferred points from a higher rated player are far greater.
         // S_{a} = {1 if Player 1 won , 0 otherwise } and we have R_{A}' = R_{A} + K * (S_{A} - E_{A}) for R_{B}' is the same but we replace R_{A} with R_{B}
         if(winnerName.equals(player1Name)){
-            db.updatePlayerElo(player1Elo + k * (1-Pa), player1.getPublicKey());
+            db.updatePlayerElo((float) ((player1Elo + k * (1-Pa)) * player1CA), player1.getPublicKey());
             //We don't allow negative elo rating, so we do a quick check on the loser's new elo to not be < 0
             if((player2Elo + k * (0-Pb)) >= 0){
                 db.updatePlayerElo(player2Elo + k * (0-Pa), player2.getPublicKey());
@@ -58,7 +61,7 @@ public class EloRating{
                 db.updatePlayerElo(player1Elo + k * (0-Pa), player1.getPublicKey());
             else
                 db.updatePlayerElo(0, player1.getPublicKey());
-            db.updatePlayerElo(player2Elo + k * (1-Pb), player2.getPublicKey());
+            db.updatePlayerElo((float) ((player2Elo + k * (1-Pb)) * player2CA), player2.getPublicKey());
         }
 
 

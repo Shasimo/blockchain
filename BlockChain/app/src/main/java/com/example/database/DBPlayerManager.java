@@ -65,48 +65,12 @@ public class DBPlayerManager {
         cv.put(PLAYERS_REFEREE,user.getElo().getRefereeElo());
         cv.put(PLAYERS_PSEUDO, user.getPseudo());
         cv.put(PLAYERS_P_KEYS, privateKeyFormatted);
+        cv.put(PLAYERS_CA, user.getCAValue());
         long newRow = db.insert(PLAYERS_TABLE, null, cv);
         return true;
     }
 
     //Method to update ELO in Player table
-
-    public void updatePlayerElo(float newELO, Pair<String, String> publicKeyUnformatted) {
-
-        if (!playerExists(publicKeyUnformatted) && activityIsSet) {
-            dbErrorChecker(KEY_NOT_EXIST, activity, null);
-            return;
-        }
-        String publicKey = keyConcatenationQuery(publicKeyUnformatted);
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_ID, publicKey);
-        cv.put(PLAYERS_ELO, newELO);
-        db.update(PLAYERS_TABLE, cv, "playerId = ?", new String[]{publicKey});
-        Log.d("dbTAG", "db player update successful");
-    }
-
-    public void updateRefereeElo(float newElo,Pair<String, String> publicKeyUnformatted){
-        if (!playerExists(publicKeyUnformatted) && activityIsSet) {
-            dbErrorChecker(KEY_NOT_EXIST, activity, null);
-            return;
-        }
-
-        String publicKey = keyConcatenationQuery(publicKeyUnformatted);
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_ID, publicKey);
-        cv.put(PLAYERS_REFEREE, newElo);
-        db.update(PLAYERS_TABLE, cv, "playerId = ?", new String[]{publicKey});
-    }
-
-    public void resetOverallElo(){
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_ELO,0);
-        cv.put(PLAYERS_REFEREE,0);
-        db.update(PLAYERS_TABLE,cv,null,null);
-    }
 
     public float getPlayerElo(Pair<String, String> publicKeyUnformatted) {
 
@@ -193,36 +157,6 @@ public class DBPlayerManager {
         return pseudo;
     }
 
-    public Pair<String, String> getPlayerPublicKey(String pseudo) {
-        if (!playerExists(pseudo) && activityIsSet) {
-            dbErrorChecker(PLAYER_NOT_EXIST, activity, "Player does not exist");
-            return null;
-        }
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        Cursor cursor = db.rawQuery(playerPublicKeyQuery(pseudo), null, null);
-//        while (cursor.moveToNext()) {
-        cursor.moveToNext();
-        Log.d(DB_TAG, "publicKey from cursor" + cursor.getString(0));
-        String publicKeyUnformatted = cursor.getString(0);
-        String[] publicKeyArray = publicKeyUnformatted.split(";");
-//        }
-//        Pair<String, String> publicKey = new Pair<>(publicKeyArray[0], publicKeyArray[1]);
-
-        cursor.close();
-        return new Pair<>(publicKeyArray[0], publicKeyArray[1]);
-    }
-
-    public List<String> getAllPseudo() {
-        List<String> pseudoList = new ArrayList<String>();
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        Cursor cursor = db.rawQuery(PLAYER_GET_ALL_PSUEDO, null, null);
-        while (cursor.moveToNext()) {
-            Log.d(DB_TAG, "pseudo from cursor" + cursor.getString(0));
-            pseudoList.add(cursor.getString(0));
-        }
-        cursor.close();
-        return pseudoList;
-    }
 
     public String playerExists() {
         String res = null;
@@ -245,13 +179,5 @@ public class DBPlayerManager {
         String[] formattedPrivateKey = cursor.getString(0).split(";");
         cursor.close();
         return new Pair<String, String>(formattedPrivateKey[0],formattedPrivateKey[1]);
-    }
-
-    public void deleteRowFromPlayerTable(String ID) {
-        SQLiteDatabase db = this.db.getWritableDatabase();
-        String selection = PLAYERS_ID + " LIKE ? ";
-        String[] selectionArgs = ID.split("");
-        int deleted = db.delete(PLAYERS_TABLE, selection, selectionArgs);
-        Log.d("dbTAG", "db player deletion successful");
     }
 }

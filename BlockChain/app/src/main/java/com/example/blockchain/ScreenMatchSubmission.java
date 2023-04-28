@@ -24,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ScreenMatchSubmission extends AppCompatActivity {
+    String referee = Global.getInstance().nickname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +32,9 @@ public class ScreenMatchSubmission extends AppCompatActivity {
 
         //We need to set this activity in AndroidManifest.xml as well
 
-        String arbitre = Global.getInstance().nicknameG;
         TextView txtPseudoArbitrage = findViewById(R.id.pseudo);
         txtPseudoArbitrage.setTypeface(null, Typeface.BOLD);
-        txtPseudoArbitrage.setText(arbitre);
+        txtPseudoArbitrage.setText(referee);
 
     }
 
@@ -43,7 +43,7 @@ public class ScreenMatchSubmission extends AppCompatActivity {
 
         String player1Nickname = ((EditText) findViewById(R.id.joueur_un)).getText().toString();
         String player2Nickname = ((EditText) findViewById(R.id.joueur_deux)).getText().toString();
-        String refereeNickname = Global.getInstance().nicknameG;
+        String refereeNickname = referee;
 
         if (!db.playerExists(player1Nickname) || !db.playerExists(player2Nickname))
             throw new Exception("player not exist in db");

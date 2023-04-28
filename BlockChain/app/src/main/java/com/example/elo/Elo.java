@@ -7,8 +7,8 @@ public class Elo {
 
     //Constructor used by new players where the elo = 0
     public Elo(){
-        this.elo = 0;
-        this.refereeElo = 0;
+        this.elo = 100;
+        this.refereeElo = 100;
     }
 
     public float getElo() {
@@ -22,7 +22,6 @@ public class Elo {
 
     public float getRefereeElo(){return this.refereeElo;}
 
-    public void increaseRefereeElo(){this.refereeElo+=0.01;}
 
     public void setRefereeElo(float elo){this.refereeElo=elo;}
 }

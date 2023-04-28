@@ -9,7 +9,6 @@ import org.blockchainElo.server.util.custom_exceptions.YouAreAlone;
 import org.blockchainElo.util.Address;
 import org.blockchainElo.util.Const;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.net.Socket;
 import java.time.Instant;
 import java.util.*;
@@ -71,7 +70,7 @@ public class RendezVousNodeHandler extends NodeHandler {
         Address address = packet.getSenderAddress();
         try {
             userMap.newPeeringServer(packet.getSenderPublicKey(), address);
-        } catch (InstanceAlreadyExistsException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
             // TODO : send an error to the node
         }
@@ -132,7 +131,7 @@ public class RendezVousNodeHandler extends NodeHandler {
         if (onlineNodes.isEmpty()) return;
         Random random = new Random();
         for (int i = 0; i < Const.NUMBER_OF_AUTHORITIES; i++) {
-            String newAuthority = onlineNodes.get(random.nextInt(0, onlineNodes.size()));
+            String newAuthority = onlineNodes.get(random.nextInt(onlineNodes.size()));
             newAuthorities.add(newAuthority);
 
             changeNodeGroup(newAuthority, Group.AUTHORITY);

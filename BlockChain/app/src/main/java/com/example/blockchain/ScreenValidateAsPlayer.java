@@ -3,6 +3,7 @@ package com.example.blockchain;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,17 +20,21 @@ import com.example.network.NetworkHandler;
 import com.example.security.RSA;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class ScreenValidateAsPlayer extends AppCompatActivity {
+    ArrayList<Transaction> listOfTransactionsToSign = new ArrayList<>();
     ArrayList<Transaction> listOfCheckedTransactions = new ArrayList<>();
+    DBManager db = new DBManager(this, this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.screen_validate_as_player);
-        DBManager db = new DBManager(this, this);
 
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.transactionLayout);
+
+
 
         for (Transaction transaction : db.getAllTransactions()) {
             logTransaction(transaction);
@@ -39,8 +44,11 @@ public class ScreenValidateAsPlayer extends AppCompatActivity {
     }
 
     private void addTransactionToLayout(LinearLayout linearLayout, Transaction transaction) {
-        if (transaction.getPendingSignaturePlayerList().contains(Global.getInstance().publicKeyRepr))
+
+        if (transaction.getPendingSignaturePlayerList().contains(Global.getInstance().publicKeyStr)) {
+            listOfTransactionsToSign.add(transaction);
             linearLayout.addView(getTransactionRepresentation(transaction));
+        }
     }
 
     private void logTransaction(Transaction transaction) {
@@ -58,13 +66,20 @@ public class ScreenValidateAsPlayer extends AppCompatActivity {
         DBManager dbManager = new DBManager(this, this);
         Chain chain = new Chain();
 
-        int numberOfValidatedTransactions = listOfCheckedTransactions.size();   // might be handy for visualization
-
-        for (Transaction transaction : listOfCheckedTransactions) {
-            if (transaction.getPlayer1().getPublicKeyString().equals(Global.getInstance().publicKeyRepr))
+        for (Transaction transaction : listOfTransactionsToSign) {
+            if (transaction.getPlayer1().getPublicKeyString().equals(Global.getInstance().publicKeyStr)) {
                 transaction.setPlayer1Signature(rsa.EncryptUsingPrivate(Long.toString(transaction.getTimeStamp())));
-            else
+                if(listOfCheckedTransactions.contains(transaction)) {
+                    db.updateFairnessTransaction(transaction, true, false);
+                }
+            }
+
+            else {
                 transaction.setPlayer2Signature(rsa.EncryptUsingPrivate(Long.toString(transaction.getTimeStamp())));
+                if(listOfCheckedTransactions.contains(transaction)) {
+                    db.updateFairnessTransaction(transaction, false, true);
+                }
+            }
 
             dbManager.updateTransaction(transaction);
             try {
@@ -114,4 +129,5 @@ public class ScreenValidateAsPlayer extends AppCompatActivity {
 
         return linearLayout;
     }
+
 }

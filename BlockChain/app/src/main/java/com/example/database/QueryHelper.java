@@ -25,6 +25,10 @@ public final class QueryHelper {
         return "select " + PLAYERS_REFEREE + " from " + PLAYERS_TABLE + " where " + PLAYERS_ID + " = '" + id + "'";
     }
 
+    public static String playerCAQuery(String pseudo) {
+        return "select " + PLAYERS_CA + " from " + PLAYERS_TABLE + " where " + PLAYERS_PSEUDO + " = '" + pseudo + "'";
+    }
+
     public static String keyConcatenationQuery(Pair<String, String> id){
         return String.format("%s;%s", id.first, id.second);
     }

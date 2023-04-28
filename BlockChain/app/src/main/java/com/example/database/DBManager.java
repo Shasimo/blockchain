@@ -11,6 +11,9 @@ import static com.example.database.QueryHelper.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,8 +62,8 @@ public class DBManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //executes Query on creation
 //        Log.d("dbTAG", BLOCKS_QUERY);
-        db.execSQL(PLAYERS_QUERY);
-        db.execSQL(TRANSACTION_QUERY);
+        db.execSQL(PLAYERS_QUERY_CA);
+        db.execSQL(TRANSACTION_QUERY_CA);
         db.execSQL(BLOCKS_QUERY);
         Log.d("dbTAG", "db creation success");
 
@@ -98,6 +101,7 @@ public class DBManager extends SQLiteOpenHelper {
         cv.put(PLAYERS_REFEREE, user.getElo().getRefereeElo());
         cv.put(PLAYERS_PSEUDO, user.getPseudo());
         cv.put(PLAYERS_P_KEYS, privateKeyFormatted);
+        cv.put(PLAYERS_CA, user.getCAValue());
         long newRow = db.insert(PLAYERS_TABLE, null, cv);
         return true;
     }
@@ -113,20 +117,27 @@ public class DBManager extends SQLiteOpenHelper {
         Log.d("dbTAG", "db player update successful");
     }
 
-    public void updateRefereeElo(float newElo, Pair<String, String> publicKeyUnformatted) {
-        String publicKey = keyConcatenationQuery(publicKeyUnformatted);
+    public void updatePlayerCA(double newCA, String pseudo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_ID, publicKey);
-        cv.put(PLAYERS_REFEREE, newElo);
-        db.update(PLAYERS_TABLE, cv, "playerId = ?", new String[]{publicKey});
+        cv.put(PLAYERS_PSEUDO, pseudo);
+        cv.put(PLAYERS_CA, newCA);
+        db.update(PLAYERS_TABLE, cv, "pseudo = ?", new String[]{pseudo});
     }
+
 
     public void resetOverallElo() {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(PLAYERS_ELO, 0);
+        cv.put(PLAYERS_ELO, 100);
         cv.put(PLAYERS_REFEREE, 0);
+        db.update(PLAYERS_TABLE, cv, null, null);
+    }
+
+    public void resetOverallCA() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PLAYERS_CA, (float) 0.5);
         db.update(PLAYERS_TABLE, cv, null, null);
     }
 
@@ -148,6 +159,21 @@ public class DBManager extends SQLiteOpenHelper {
         Log.d(DB_TAG, "return elo from fonction" + elo);
         return Float.parseFloat(elo);
     }
+
+    public double getCAPlayer(String pseudo) {
+        String ca = null;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(playerCAQuery(pseudo), null, null);
+        while (cursor.moveToNext()) {
+            ca = cursor.getString(0);
+        }
+        if (ca == null) {
+            return -1;
+        }
+        cursor.close();
+        return Double.parseDouble(ca);
+    }
+
 
     public float getPlayerRefereeElo(Pair<String, String> publicKeyUnformatted) {
         String publicKey = keyConcatenationQuery(publicKeyUnformatted);
@@ -183,6 +209,15 @@ public class DBManager extends SQLiteOpenHelper {
         return users;
     }
 
+    public ArrayList<String> fetchAllUsersNickname() {
+        ArrayList<User> users = fetchAllUsers();
+        ArrayList<String> usersNickname = new ArrayList<>();
+        for(User user: users) {
+            usersNickname.add(user.getPseudo());
+        }
+        return usersNickname;
+    }
+
     public String getPlayerPseudo(Pair<String, String> publicKeyUnformatted) {
         String publicKey = keyConcatenationQuery(publicKeyUnformatted);
         String pseudo = "";
@@ -203,12 +238,15 @@ public class DBManager extends SQLiteOpenHelper {
 
     public Pair<String, String> getPlayerPublicKey(String pseudo) {
         SQLiteDatabase db = this.getWritableDatabase();
+        System.out.println(pseudo);
         Cursor cursor = db.rawQuery(playerPublicKeyQuery(pseudo), null, null);
 //        while (cursor.moveToNext()) {
         cursor.moveToNext();
-        Log.d(DB_TAG, "publicKey from cursor" + cursor.getString(0));
+        Log.d(DB_TAG, "publicKey from cursor: " + cursor.getString(0));
         String publicKeyUnformatted = cursor.getString(0);
+        System.out.println(publicKeyUnformatted);
         String[] publicKeyArray = publicKeyUnformatted.split(";");
+        System.out.println(publicKeyArray.length);
 //        }
 //        Pair<String, String> publicKey = new Pair<>(publicKeyArray[0], publicKeyArray[1]);
 
@@ -216,23 +254,10 @@ public class DBManager extends SQLiteOpenHelper {
         return new Pair<>(publicKeyArray[0], publicKeyArray[1]);
     }
 
-    public ArrayList<String> getAllPseudo() {
-        ArrayList<String> pseudoList = new ArrayList<>();
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(PLAYER_GET_ALL_PSUEDO, null, null);
-        while (cursor.moveToNext()) {
-            Log.d(DB_TAG, "pseudo from cursor" + cursor.getString(0));
-            pseudoList.add(cursor.getString(0));
-        }
-        cursor.close();
-        return pseudoList;
-    }
 
     public String playerExists() {
         String res = null;
         SQLiteDatabase db = this.getWritableDatabase();
-//        Log.d(DB_TAG, "select " + PLAYERS_PSEUDO + " from " + PLAYERS_TABLE + " where " + PLAYERS_ID + " is not null and " + PLAYERS_P_KEYS + " is not null");
         Cursor cursor = db.rawQuery(PLAYER_EXISTS_QUERY, null, null);
         while (cursor.moveToNext()) {
             Log.d(DB_TAG, "pseudo from cursor: " + cursor.getString(0));
@@ -242,19 +267,9 @@ public class DBManager extends SQLiteOpenHelper {
         return res;
     }
 
-    public void insertNewBlock(String transac) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Log.d("dbTAG", "Insert with transac " + transac);
-        ContentValues cv = new ContentValues();
-        cv.put(BLOCKS_TRANSACTION, transac);
-        long newRow = db.insert(BLOCKS_TABLE, null, cv);
-    }
 
-    // TODELETE... PROBABLY ?
-    public void updateBlock(String newELO, String ID) {
-        SQLiteDatabase DB = this.getWritableDatabase();
-        DB.execSQL("UPDATE Player SET elo = " + newELO + " Where ID = " + ID);
-    }
+
+
 
     public void insertNewTransac(Transaction transaction) {
         Log.d(DB_TAG, "--->>>>>>insertNewTransac entered");
@@ -273,6 +288,8 @@ public class DBManager extends SQLiteOpenHelper {
         cv.put(TRANSACTION_PLAYER_TWO_ID, transaction.getPlayer2().getPublicKeyString());
         cv.put(TRANSACTION_REFEREE_ID, transaction.getReferee().getPublicKeyString());
         cv.put(TRANSACTION_WINNER, transaction.getWinner().getPublicKeyString());
+        cv.put(TRANSACTION_PLAYER_ONE_MATCH_FAIR, transaction.isMatchFairForPlayer1());
+        cv.put(TRANSACTION_PLAYER_TWO_MATCH_FAIR, transaction.isMatchFairForPlayer2());
         long newRow = db.insert(TRANSACTION_TABLE, null, cv);
     }
 
@@ -293,10 +310,20 @@ public class DBManager extends SQLiteOpenHelper {
             User referee = new User(getPlayerPseudo(refereeId), player2Id);
             User winner = new User(getPlayerPseudo(winnerPublicKey), winnerPublicKey);
 
-            int indexOfTimestamp = cursor.getColumnIndex("timestamp");
-            long timestamp = Long.valueOf(cursor.getString(indexOfTimestamp));
+            int p1Fairness = Integer.parseInt(cursor.getString(8));
+            int p2Fairness = Integer.parseInt(cursor.getString(8));
+            System.out.println("ATTENTION0: " + p1Fairness + " " + p2Fairness);
 
-            Transaction transaction = new Transaction(player1, player2, referee, winner, cursor.getString(cursor.getColumnIndexOrThrow(TRANSACTION_REFEREE_SIGNATURE)), null, null, timestamp);
+            boolean isFairP1 = (p1Fairness == 1);
+            boolean isFairP2 = (p2Fairness == 1);
+            System.out.println("ATTENTION: " + isFairP1 + " " + isFairP2);
+
+            int indexOfTimestamp = cursor.getColumnIndex("timestamp");
+            long timestamp = Long.parseLong(cursor.getString(indexOfTimestamp));
+
+
+
+            Transaction transaction = new Transaction(player1, player2, referee, winner, cursor.getString(cursor.getColumnIndexOrThrow(TRANSACTION_REFEREE_SIGNATURE)), null, null, isFairP1, isFairP2, timestamp);
 
             int player1SignatureIndex = cursor.getColumnIndex(TRANSACTION_PLAYER_SIGNATURE_PLAYER_ONE);
             int player2SignatureIndex = cursor.getColumnIndex(TRANSACTION_PLAYER_SIGNATURE_PLAYER_TWO);
@@ -314,6 +341,25 @@ public class DBManager extends SQLiteOpenHelper {
         return transactions;
     }
 
+    public void updateFairnessTransaction(Transaction transaction, boolean isAcceptedByP1, boolean isAcceptedByP2) {
+        if (!transactionExists(transaction)) return;
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        if(isAcceptedByP1) {
+            contentValues.put(TRANSACTION_PLAYER_ONE_MATCH_FAIR, true);
+        }
+        if(isAcceptedByP2) {
+            contentValues.put(TRANSACTION_PLAYER_TWO_MATCH_FAIR, true);
+        }
+
+        String selection = TRANSACTION_ID + " LIKE ?";
+        String[] selectionArgs = {transaction.getId()};
+
+        db.update(TRANSACTION_TABLE, contentValues, selection, selectionArgs);
+    }
+
     public void updateTransaction(Transaction transaction) {
         if (!transactionExists(transaction)) return;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -322,78 +368,11 @@ public class DBManager extends SQLiteOpenHelper {
         contentValues.put(TRANSACTION_PLAYER_SIGNATURE_PLAYER_ONE, transaction.getPlayer1Signature());
         contentValues.put(TRANSACTION_PLAYER_SIGNATURE_PLAYER_TWO, transaction.getPlayer2Signature());
 
+
         String selection = TRANSACTION_ID + " LIKE ?";
         String[] selectionArgs = {transaction.getId()};
 
         db.update(TRANSACTION_TABLE, contentValues, selection, selectionArgs);
-    }
-
-    public void updateTransac(String id, String refereeSign, String playerSignOne, String playerSignTwo) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(TRANSACTION_ID, id);
-        cv.put(TRANSACTION_REFEREE_SIGNATURE, refereeSign);
-        cv.put(TRANSACTION_PLAYER_SIGNATURE_PLAYER_ONE, playerSignOne);
-        cv.put(TRANSACTION_PLAYER_SIGNATURE_PLAYER_TWO, playerSignTwo);
-        String selection = PLAYERS_ID + " LIKE ?";
-        String[] selectionArgs = id.split("");
-        int count = db.update(TRANSACTION_TABLE, cv, selection, selectionArgs);
-        Log.d("dbTAG", "db player update successful");
-    }
-
-    //Method to delete from a table with ID condition, ID CAN BE ALSO THE ID OF A BLOCK
-    public void deleteRowFromPlayerTable(String ID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = PLAYERS_ID + " LIKE ? ";
-        String[] selectionArgs = ID.split("");
-        int deleted = db.delete(PLAYERS_TABLE, selection, selectionArgs);
-        Log.d("dbTAG", "db player deletion successful");
-    }
-
-    public void deleteRowFromBlockTable(String ID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String selection = BLOCKS_ID + " LIKE ? ";
-        String[] selectionArgs = ID.split("");
-        int deleted = db.delete(BLOCKS_TABLE, selection, selectionArgs);
-        Log.d("dbTAG", "db BLOCK deletion successful");
-    }
-
-    //Method to delete a table
-    public void dropTable(String tableName) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL(DELETE_QUERY + tableName);
-
-    }
-
-    //Method to read from a table
-    public void ReadDataFromPlayerTable() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursorP = db.rawQuery("Select * from Players", null, null);
-        Cursor cursorB = db.rawQuery("Select * from Blocks", null, null);
-        Cursor cursorT = db.rawQuery("Select * from Transac", null, null);
-        //cursor.getString(index) will give you the info from like example row 0 : index 0 is the Id
-        //index 1 is the elo
-        //Then it will move to row 2 and so on
-        int playerIndex = 0;
-        while (cursorP.moveToNext()) {
-            Log.d("dbTAG", "index: " + playerIndex + " ID is : " + cursorP.getString(0) + " elo is " + cursorP.getString(1) + "pseudo: " + cursorP.getString(2) + "key: " + cursorP.getString(3));
-            playerIndex++;
-        }
-        cursorP.close();
-        int blockIndex = 0;
-        while (cursorB.moveToNext()) {
-            Log.d("dbTAG", "index: " + blockIndex + " BLOCK_ID is : " + cursorB.getString(0) + " BLOCK_DETAILS " + cursorB.getString(1) + " BLOCK_TRANSACTION " + cursorB.getString(2));
-            blockIndex++;
-        }
-        cursorB.close();
-        int transacIndex = 0;
-        while (cursorT.moveToNext()) {
-            Log.d("dbTag", "index: " + transacIndex + " TRANSACTION_ID IS: " + cursorT.getString(0) + " TRANSACTION_PLAYER_SIGNATURE IS: " + cursorT.getString(1) + " TRANSACTION_REFEREE_SIGNATURE IS: " + cursorT.getString(2));
-            transacIndex++;
-        }
-        cursorT.close();
-
-
     }
 
     @Override

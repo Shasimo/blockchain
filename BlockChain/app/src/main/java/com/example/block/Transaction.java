@@ -27,6 +27,9 @@ public class Transaction implements Serializable {
     private String player1Signature = null;
     private String player2Signature = null;
 
+    private boolean matchFairForPlayer1 = false;
+    private boolean matchFairForPlayer2 = false;
+
 
     public Transaction(User player1, User player2, User referee, User winner, RSA rsa, long timestamp) {
         this.player1 = player1;
@@ -36,6 +39,21 @@ public class Transaction implements Serializable {
         this.timeStamp = timestamp;
         this.refereeSignature = rsa.EncryptUsingPrivate(Long.toString(timeStamp));
         this.id = getTransactionId();
+    }
+
+    public Transaction(User player1, User player2, User referee, User winner, String refereeSignature, String player1Signature, String player2Signature, boolean matchFairForPlayer1, boolean matchFairForPlayer2, long timestamp) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.referee = referee;
+        this.winner = winner;
+        this.refereeSignature = refereeSignature;
+        this.player1Signature = player1Signature;
+        this.player2Signature = player2Signature;
+        this.timeStamp = timestamp;
+
+        this.id = getTransactionId();
+        this.matchFairForPlayer1 = matchFairForPlayer1;
+        this.matchFairForPlayer2 = matchFairForPlayer2;
     }
 
     public Transaction(User player1, User player2, User referee, User winner, String refereeSignature, String player1Signature, String player2Signature, long timestamp){
@@ -113,10 +131,6 @@ public class Transaction implements Serializable {
         return timeStamp;
     }
 
-    public void setRefereeSignature(String refereeSignature) {
-        this.refereeSignature = refereeSignature;
-    }
-
     public void setPlayer1Signature(String player1Signature) {
         this.player1Signature = player1Signature;
     }
@@ -125,7 +139,49 @@ public class Transaction implements Serializable {
         this.player2Signature = player2Signature;
     }
 
+    public void setMatchFairForPlayer1(boolean matchFairForPlayer1) {
+        this.matchFairForPlayer1 = matchFairForPlayer1;
+    }
+
+    public void setMatchFairForPlayer2(boolean matchFairForPlayer2) {
+        this.matchFairForPlayer2 = matchFairForPlayer2;
+    }
+
+    public boolean isResultAcceptedByBoth() {
+        return this.matchFairForPlayer1 && this.matchFairForPlayer2;
+    }
+
+    public boolean isResultUnfairForBoth() {
+        return !isMatchFairForPlayer1() && !isMatchFairForPlayer2();
+    }
+
+    public boolean isResultUnfairForLoserOnly() {
+        if(winner.getPublicKeyString().equals(player1.getPublicKeyString())) {
+            return isMatchFairForPlayer1() && !isMatchFairForPlayer2();
+        }
+        else {return !isMatchFairForPlayer1() && isMatchFairForPlayer2();}
+    }
+
+
+    public boolean isMatchFairForPlayer1() {
+        return matchFairForPlayer1;
+    }
+
+    public boolean isMatchFairForPlayer2() {
+        return matchFairForPlayer2;
+    }
+
+
     public String getId() {
         return this.id;
+    }
+
+    public User getLoser() {
+        if(winner.getPublicKeyString().equals(player1.getPublicKeyString())) {
+            return player2;
+        }
+        else {
+            return player1;
+        }
     }
 }

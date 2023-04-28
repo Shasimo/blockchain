@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.blockchain.User;
 import com.example.database.DBManager;
+import com.example.elo.CARating;
 import com.example.elo.EloRating;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class Chain extends AppCompatActivity {
@@ -17,6 +20,7 @@ public class Chain extends AppCompatActivity {
     private ArrayList<Block> blockChain = new ArrayList<Block>();
     private DBManager db = null;
     private int blockChainScore = 0;
+
 
     //Method to get the last block in the chain.
     public Block getLastBlock() {
@@ -36,66 +40,43 @@ public class Chain extends AppCompatActivity {
         blockChain.add(newBlock);
     }
 
-    public void calculateScore() {
-        for (int i = 0; i < blockChain.size(); i++) {
-            blockChainScore += blockChain.get(i).getScore();
-        }
-    }
-
-    public int getBlockChainScore() {
-        return blockChainScore;
-    }
-
-
-    public void updateOverallElo() {
-        db.resetOverallElo();
-        for (Block block : blockChain) {
-            // todo not used for now
-
-            //            updateAllFromTransactions(block);
-        }
-    }
 
     public void updateAllFromTransactions(DBManager db) {
-        ArrayList<User> users = db.fetchAllUsers();
+        ArrayList<String> users = db.fetchAllUsersNickname();
+        ArrayList<Integer> valueOfFairnessByUser = new ArrayList<>(Collections.nCopies(users.size(), 0));
+
 
         db.resetOverallElo();
+        db.resetOverallCA();
         for (Transaction transaction : db.getAllTransactions()) {
             if (transaction.getPendingSignaturePlayerList().isEmpty()) {
-                //Calculate player1 and player2 scores and increase the referee's score as well.
-                EloRating.getInstance().Rating(transaction,30, db);
-                //Recuperate the actual elo from db.
-//                Log.d("chain", "player1 : " + transaction.getPlayer1().getPseudo());
-//                Log.d("chain", "player2 : " + transaction.getPlayer2().getPseudo());
-//                Log.d("chain", "winner : " + transaction.getWinner().getPseudo());
+                if (transaction.isResultAcceptedByBoth()) {
+                    updateCAForMatch(db, users, valueOfFairnessByUser, transaction.getReferee(), 1);
+                    updateCAForMatch(db, users, valueOfFairnessByUser, transaction.getLoser(), 1);
+                    EloRating.getInstance().Rating(transaction, 30, 1.5, db);
+                    //m peut être modifié. Il aide simplement à balancer le coefficient d arbitrage
+                    //pour éviter de faire trop baisser les elos au début (1.5 * 0.5 = 0.75)
+                }
+                if (transaction.isResultUnfairForBoth()) {
+                    updateCAForMatch(db, users, valueOfFairnessByUser, transaction.getReferee(), -1);
+                }
 
-
-//                float player1Elo = db.getPlayerElo(transaction.getPlayer1().getPublicKey());
-//                float player2Elo = db.getPlayerElo(transaction.getPlayer2().getPublicKey());
-//
-//                Log.d("chain", "player1 elo : " + player1Elo);
-//                Log.d("chain", "player2 elo : " + player2Elo);
-
-                //Add the new score to the current score.
-//                player1Elo += transaction.getPlayer1().getElo().getElo();
-//                player2Elo += transaction.getPlayer2().getElo().getElo();
-//                transaction.getReferee().getElo().increaseRefereeElo();
-//
-//                //Update scores in db with the new scores.
-//                db.updatePlayerElo(player1Elo, transaction.getPlayer1().getPublicKey());
-//                db.updatePlayerElo(player2Elo, transaction.getPlayer2().getPublicKey());
-//                db.updateRefereeElo(transaction.getReferee().getElo().getRefereeElo(), transaction.getReferee().getPublicKey());
+                if (transaction.isResultUnfairForLoserOnly()) {
+                    updateCAForMatch(db, users, valueOfFairnessByUser, transaction.getLoser(), -1);
+                }
             }
         }
     }
 
-    public void updateDB() {
-        //Update the db
-    }
 
-    public void fetchDB() {
-        //fetch the db
+    private void updateCAForMatch(DBManager db, ArrayList<String> usersNicknames, ArrayList<Integer> fairMatches, User user, int delta) {
+        int index = usersNicknames.indexOf(user.getPseudo());
+        int numberOfFairMatches = fairMatches.get(index) + delta;
+        fairMatches.set(index, numberOfFairMatches);
+        CARating.getInstance().Rating(db, user, numberOfFairMatches);
     }
-
 
 }
+
+
+

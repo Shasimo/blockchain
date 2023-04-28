@@ -166,13 +166,7 @@ public class MainActivity extends AppCompatActivity {
             // todo handle what happens when the server is offline
             NetworkHandler.getInstance().connectToNetwork(publicKey, privateKey, pseudo);
             intent = new Intent(MainActivity.this, SecondScreen.class);
-
-            Global.getInstance().nicknameG = pseudo;
-            Global.getInstance().publicKeyRepr = String.format("%s;%s",publicKey.first, publicKey.second);
-
-            Global.getInstance().publicKey = publicKey;
-            Global.getInstance().privateKey = privateKey;
-
+            intent.putExtra("extra", pseudo);
             try {
                 NetworkHandler.getInstance().getRendezVousClient().askForChain();
             } catch (Exception e) {

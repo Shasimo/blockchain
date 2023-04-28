@@ -31,6 +31,8 @@ public final class DBConst {
 
     public static final String PLAYERS_PSEUDO = "pseudo";
 
+    public static final String PLAYERS_CA = "coefficientArbitrage";
+
     // Transaction DB
     // ----------------------------------------------------------------
     public static final String TRANSACTION_TABLE = "Transac";
@@ -53,6 +55,10 @@ public final class DBConst {
 
     public static final String TRANSACTION_TIMESTAMP = "timestamp";
 
+    public static final String TRANSACTION_PLAYER_ONE_MATCH_FAIR = "playerOneMatchFair";
+
+    public static final String TRANSACTION_PLAYER_TWO_MATCH_FAIR = "playerTwoMatchFair";
+
     // Creation Query
     public static final String BLOCKS_QUERY = "CREATE TABLE IF NOT EXISTS " + BLOCKS_TABLE + " ( "
             + BLOCKS_ID + " TEXT PRIMARY KEY, "
@@ -65,6 +71,14 @@ public final class DBConst {
             + PLAYERS_PSEUDO + " TEXT,"
             + PLAYERS_P_KEYS + " TEXT) ";
 
+    public static final String PLAYERS_QUERY_CA = "CREATE TABLE IF NOT EXISTS " + PLAYERS_TABLE + "("
+            + PLAYERS_ID + " TEXT PRIMARY KEY, "
+            + PLAYERS_ELO + " FLOAT,"
+            + PLAYERS_REFEREE + " FLOAT,"
+            + PLAYERS_PSEUDO + " TEXT,"
+            + PLAYERS_P_KEYS + " TEXT, "
+            + PLAYERS_CA + " DOUBLE) ";
+
     public static final String TRANSACTION_QUERY = "CREATE TABLE IF NOT EXISTS " + TRANSACTION_TABLE + " ( "
             + TRANSACTION_ID + " TEXT PRIMARY KEY, "
             + TRANSACTION_PLAYER_SIGNATURE_PLAYER_ONE + " INTEGER DEFAULT 0, "
@@ -75,6 +89,20 @@ public final class DBConst {
             + TRANSACTION_REFEREE_ID + " TEXT, "
             + TRANSACTION_WINNER + " TEXT, "
             + TRANSACTION_TIMESTAMP + " TEXT) ";
+
+    public static final String TRANSACTION_QUERY_CA = "CREATE TABLE IF NOT EXISTS " + TRANSACTION_TABLE + " ( "
+            + TRANSACTION_ID + " TEXT PRIMARY KEY, "
+            + TRANSACTION_PLAYER_SIGNATURE_PLAYER_ONE + " INTEGER DEFAULT 0, "
+            + TRANSACTION_PLAYER_ONE_ID + " TEXT, "
+            + TRANSACTION_PLAYER_SIGNATURE_PLAYER_TWO + " INTEGER DEFAULT 0, "
+            + TRANSACTION_PLAYER_TWO_ID + " TEXT, "
+            + TRANSACTION_REFEREE_SIGNATURE + " INTEGER DEFAULT 0, "
+            + TRANSACTION_REFEREE_ID + " TEXT, "
+            + TRANSACTION_WINNER + " TEXT, "
+            + TRANSACTION_PLAYER_ONE_MATCH_FAIR + " BOOLEAN, "
+            + TRANSACTION_PLAYER_TWO_MATCH_FAIR + " BOOLEAN, "
+            + TRANSACTION_TIMESTAMP + " TEXT) ";
+
     public static final String DELETE_QUERY = "DROP TABLE IF EXISTS ";
 
     public static final String PLAYER_EXISTS_QUERY = "select " + PLAYERS_PSEUDO + " from " + PLAYERS_TABLE + " where " + PLAYERS_ID + " is not null and " + PLAYERS_P_KEYS + " is not null";
@@ -82,4 +110,6 @@ public final class DBConst {
     public static final String PLAYER_GET_ALL_PSUEDO = "select " + PLAYERS_PSEUDO + " from " + PLAYERS_TABLE;
 
     public static final String PLAYERS_GET_PRIVATE_KEY = "select " +  PLAYERS_P_KEYS +  " from " + PLAYERS_TABLE + " where " + PLAYERS_P_KEYS + " is not null";
+
+    public static final String PLAYER_GET_CA = "select " + PLAYERS_CA + " from " + PLAYERS_TABLE;
 }

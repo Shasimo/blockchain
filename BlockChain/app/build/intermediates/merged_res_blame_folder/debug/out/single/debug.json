@@ -1,0 +1,162 @@
+[
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_match_submission.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\match_submission.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable_drawing.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\drawable\\drawing.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_second_screen_layout.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\second_screen_layout.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable_edit_txt_bg.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\drawable\\edit_txt_bg.xml"
+    },
+    {
+        "merged": "com.example.blockchain.app-merged_res-27:/layout_leaderboard.xml.flat",
+        "source": "com.example.blockchain.app-main-29:/layout/leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_submitted_screen.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\submitted_screen.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable_imageprofile.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\drawable\\imageprofile.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\raw_video_main.mp4.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\raw\\video_main.mp4"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable-v24_wallpaperwelcomescreen.jpg.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\drawable-v24\\wallpaperwelcomescreen.jpg"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_db_test.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\db_test.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_screen_validate_as_player.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\screen_validate_as_player.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_inscription.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\inscription.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\color_button_color_background.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\color\\button_color_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_leaderboard.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\drawable_titlev2.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\drawable\\titlev2.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\raw_video_mainv2.mp4.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\raw\\video_mainv2.mp4"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_submitted_screen_player.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\submitted_screen_player.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\layout_activity_transaction_validation_success.xml.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-main-29:\\layout\\activity_transaction_validation_success.xml"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-merged_res-27:\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shans\\.gradle\\daemon\\7.4\\com.example.blockchain.app-debug-28:\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    }
+]

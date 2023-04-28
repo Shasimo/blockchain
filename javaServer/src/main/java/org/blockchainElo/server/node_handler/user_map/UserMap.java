@@ -6,7 +6,6 @@ import org.blockchainElo.server.util.custom_exceptions.YouAreAlone;
 import org.blockchainElo.util.Address;
 import org.blockchainElo.util.Pair;
 
-import javax.management.InstanceAlreadyExistsException;
 import java.util.*;
 
 public class UserMap {
@@ -42,8 +41,7 @@ public class UserMap {
         return knownNetwork.get(publicKey).size() == maxNumberOfPeers;
     }
 
-    public void newPeeringServer(String publicKey, Address address) throws InstanceAlreadyExistsException {
-        if (isServer(publicKey)) throw new InstanceAlreadyExistsException();
+    public void newPeeringServer(String publicKey, Address address) {
         peeringServersAddresses.put(publicKey, address);
         knownNetwork.put(publicKey, new ArrayList<>());
         fillingOrder.add(publicKey);
